@@ -1,6 +1,6 @@
-import { element } from 'prop-types';
+// import { element } from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 import { fetchMovieForKeyword } from 'services/fetchMovie';
 import ItemMoveList from './ItemMovieList';
