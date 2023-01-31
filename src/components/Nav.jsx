@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 
-
+// d
 const Nav = () => {
     return (<nav>
         <NavLink to="/">Home</NavLink>
