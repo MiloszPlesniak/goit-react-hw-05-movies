@@ -1,13 +1,17 @@
 import { fetchMovieDetails } from 'services/fetchMovie';
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
+import GoBackButton from './GoBackButton';
 
-const ItemMoveList = ({ movieID }) => {
+const ItemMoveList = () => {
   const [movieData, setMovieData] = useState({});
+  const id = useParams().id;
+  const location = useLocation()
+  const backHref = location.state?.from ?? '/';
 
   useEffect(() => {
     const fetchData = async () => {
-      const details = await fetchMovieDetails(movieID);
+      const details = await fetchMovieDetails(id);
 
       const { original_title, release_date, overview, genres, vote_average } =
         details;
@@ -16,7 +20,7 @@ const ItemMoveList = ({ movieID }) => {
           return item.name;
         })
         .toString();
-      
+
       const filtredDetails = {
         vote_average: vote_average
           ? (vote_average * 10).toFixed(0) + '%'
@@ -35,9 +39,10 @@ const ItemMoveList = ({ movieID }) => {
 
   const { original_title, release_date, overview, genresString, vote_average } =
     movieData;
-  console.log(movieData);
+
   return (
     <div>
+      <GoBackButton backHref={backHref} />
       <h2>
         {original_title} ({release_date})
       </h2>
@@ -46,12 +51,11 @@ const ItemMoveList = ({ movieID }) => {
       <p>{overview}</p>
       <h4>Genres</h4>
       <p>{genresString}</p>
+      <Link to={'Cast'}>Cast </Link>
+      <Link to={'Reviews'}>Reviews</Link>
+      <Outlet />
     </div>
   );
-};
-
-ItemMoveList.propTypes = {
-  movieID: PropTypes.number.isRequired,
 };
 
 export default ItemMoveList;

@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { fetchFromApiList } from 'services/fetchMovie';
-import MovieList from './MovieList';
-import ItemMoveList from './ItemMovieList';
-import Nav from './Nav';
-import MoviesSearch from './MoviesSearch';
-import NotFound from './NotFound';
+import { lazy,Suspense } from 'react';
+
+const MovieList = lazy(() => import("./MovieList"))
+const ItemMoveList = lazy(()=> import("./ItemMovieList"))
+const Nav = lazy(()=> import("./Nav"))
+const MoviesSearch = lazy(()=> import("./MoviesSearch"))
+const  Cast = lazy(()=> import("./Cast"))
+const Reviews = lazy(() => import('./Reviews'));
+const NotFound = lazy(()=> import("./NotFound"))
 
 export const App = () => {
   const [movie, setMovie] = useState([]);
@@ -22,26 +26,22 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
-
   return (
     <div>
       <Nav></Nav>
-      <Routes>
-        <Route path="/" element={<MovieList movieData={movie} />} />
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<MovieList movieData={movie} />} />
 
-        {movie.map(({ id }) => {
-          return (
-            <Route
-              key={id}
-              path={'/movies/' + id}
-              element={<ItemMoveList movieID={id} />}
-            />
-          );
-        })}
-        <Route path="/movies" element={<MoviesSearch />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="/movies/:id" element={<ItemMoveList />}>
+            <Route path="Cast" element={<Cast />} />
+            <Route path="Reviews" element={<Reviews />} />
+          </Route>
+
+          <Route path="/movies" element={<MoviesSearch />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };

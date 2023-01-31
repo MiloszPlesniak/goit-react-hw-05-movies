@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 const API_KEY = "d9966d378d1934b9425ef6ee448d16ed"
@@ -15,5 +16,10 @@ export const fetchMovieDetails = async (id) => {
 export const fetchMovieForKeyword = async (keyword) => {
     const response = await axios.get("https://api.themoviedb.org/3/search/movie?api_key="+API_KEY+"&query="+keyword)
     return response.data.results
+}
+export const fetchMovieReviewsOrCast = async (id,type) => {
+    const response = await axios.get("https://api.themoviedb.org/3/movie/" + id + "/" + type + "?api_key=" + API_KEY)
+    
+    return response.data
 }
 

@@ -1,4 +1,4 @@
-const NotFound = () => { <div>Nic tu nie ma</div> }
+const NotFound = () => { <div>Page not found</div> }
 
 
 export default NotFound
