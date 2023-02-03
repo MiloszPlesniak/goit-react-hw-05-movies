@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { Route, Routes, useSearchParams } from 'react-router-dom';
-import { fetchMovieForKeyword } from 'services/fetchMovie';
+import { fetchMovieByQuery } from 'services/fetchMovie';
 import MovieList from './MovieList';
 
 const MoviesSearch = () => {
@@ -16,7 +16,7 @@ const MoviesSearch = () => {
   };
   useEffect(() => {
     const fetchList = async () => {
-      const movies = await fetchMovieForKeyword(searchValue);
+      const movies = await fetchMovieByQuery(searchValue);
       setMoviesList(movies);
     };
     fetchList();

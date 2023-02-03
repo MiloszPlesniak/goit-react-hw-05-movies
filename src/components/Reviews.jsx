@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieReviewsOrCast } from 'services/fetchMovie';
 
 const Reviews = () => {
-  const id = useParams().id;
+  const { id } = useParams();
   const [userReviews, setuserReviews] = useState([]);
 
   useEffect(() => {
@@ -12,19 +12,20 @@ const Reviews = () => {
       setuserReviews(reviews.results);
     };
     fetchReviews();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
       {userReviews.length > 0 ? (
         <ul>
           {userReviews.map(({ author, content, id }) => {
-            return (<li key={id}>
-              <h4>{author}</h4>
-              <p>{content}</p>
-            </li>)
-            
+            return (
+              <li key={id}>
+                <h4>{author}</h4>
+                <p>{content}</p>
+              </li>
+            );
           })}
         </ul>
       ) : (

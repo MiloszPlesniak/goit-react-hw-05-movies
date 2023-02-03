@@ -5,8 +5,8 @@ import GoBackButton from './GoBackButton';
 
 const ItemMoveList = () => {
   const [movieData, setMovieData] = useState({});
-  const id = useParams().id;
-  const location = useLocation()
+  const {id }= useParams();
+  const location = useLocation();
   const backHref = location.state?.from ?? '/';
 
   useEffect(() => {
